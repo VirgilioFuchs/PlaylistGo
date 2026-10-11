@@ -1,0 +1,81 @@
+.button {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  min-height: 44px;
+  max-width: 100%;
+  padding: var(--gm-space-2) var(--gm-space-4);
+  overflow: hidden;
+  border: 1px solid transparent;
+  border-radius: var(--gm-radius-md);
+  color: var(--ink);
+  font: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+  transition:
+    background-color var(--gm-duration-fast) var(--gm-ease-standard),
+    border-color var(--gm-duration-fast) var(--gm-ease-standard),
+    color var(--gm-duration-fast) var(--gm-ease-standard),
+    transform var(--gm-duration-fast) var(--gm-ease-standard);
+}
+
+.primary {
+  background: var(--gm-accent-500);
+  color: var(--gm-bg-0);
+}
+
+.secondary {
+  border-color: var(--gm-surface-2);
+  background: var(--gm-surface-1);
+  color: var(--ink);
+}
+
+.button:hover:not(:disabled) {
+  background: var(--gm-surface-2);
+}
+
+.primary:hover:not(:disabled) {
+  background: var(--gm-info-500);
+}
+
+.button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--gm-info-500);
+  outline-offset: 2px;
+}
+
+.selected {
+  border-color: var(--gm-info-500);
+  background: var(--gm-info-500);
+  color: var(--gm-bg-0);
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.label,
+.labelLoading,
+.loadingLabel {
+  grid-area: 1 / 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.labelLoading {
+  visibility: hidden;
+}
+
+.loadingLabel {
+  white-space: nowrap;
+}

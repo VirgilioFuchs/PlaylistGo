@@ -1,0 +1,80 @@
+@media (max-width: 1000px) {
+  .home-hub__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .home-hub__card--primary { grid-column: 1 / -1; }
+  .shell-dock { flex-direction: column; align-items: stretch; }
+  .playlist-library__hero,
+  .playlist-library__grid,
+  .mini-player__summary {
+    grid-template-columns: 1fr;
+  }
+
+  .playlist-library__meta {
+    justify-items: start;
+  }
+}
+
+@media (max-width: 760px) {
+  .app-shell {
+    padding: 0.8rem;
+    padding-bottom: max(0.8rem, var(--content-safe-bottom));
+  }
+
+  .shell-dock,
+  .shell-status {
+    border-radius: 18px;
+  }
+
+  .shell-dock { display: grid; align-items: start; }
+  .shell-placeholder-group { grid-template-columns: 1fr; gap: 0.85rem; }
+  .shell-status { flex-direction: column; align-items: start; }
+  .shell-intro { min-height: 42vh; padding: 0.5rem 0 1rem; }
+  .shell-intro__card { width: 100%; }
+  .home-hub__hero,
+  .home-hub__grid {
+    grid-template-columns: 1fr;
+  }
+  .home-hub__actions,
+  .home-hub__quick-actions { flex-direction: column; }
+  .search-history__header,
+  .playlist-library__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .search-history__actions {
+    justify-content: space-between;
+  }
+  .surface-section__header { flex-direction: column; }
+  .surface-section__aside { justify-items: start; width: 100%; }
+  .surface-section__meta { text-align: left; }
+  .surface-section__actions { width: 100%; }
+  .track-row { align-items: center; }
+
+  .sheet { padding: 0; }
+  .sheet__panel { width: 100%; border-radius: 22px 22px 0 0; }
+
+  .sheet__actions,
+  .finalize-cart__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .status-banner__actions { width: 100%; }
+}
+
+@media (min-width: 1087px) {
+  :root {
+    --bottom-nav-height: 0px;
+  }
+
+  .app-shell {
+    max-width: none;
+    margin-left: 106px;
+    margin-right: 0;
+    transition: margin-left var(--gm-duration-base) var(--gm-ease-standard);
+  }
+
+  .app-shell:has([data-rail-state="expanded"]) {
+    margin-left: 245px;
+  }
+
+}

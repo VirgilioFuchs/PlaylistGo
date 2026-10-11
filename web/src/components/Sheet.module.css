@@ -1,0 +1,95 @@
+.sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  background: var(--gm-bg-0);
+}
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(12, 11, 9, 0.72);
+}
+
+.panel {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  border: 0;
+  background: var(--gm-surface-1);
+  color: var(--ink);
+  box-shadow: var(--shadow);
+}
+
+.header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: var(--gm-space-2);
+  padding: var(--gm-space-4) var(--gm-space-6);
+  border-bottom: 1px solid var(--gm-surface-2);
+}
+
+.handle {
+  grid-column: 1 / -1;
+  width: 32px;
+  height: 4px;
+  margin: 0 auto;
+  border-radius: var(--gm-radius-sm);
+  background: var(--gm-surface-2);
+}
+
+.titleBlock {
+  min-width: 0;
+  align-self: center;
+}
+
+.titleBlock h2 {
+  margin: 0;
+  overflow: hidden;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--gm-space-2);
+  justify-content: flex-end;
+}
+
+.customHeader {
+  position: absolute;
+  z-index: 2;
+  top: max(var(--gm-space-2), env(safe-area-inset-top));
+  left: max(var(--gm-space-2), env(safe-area-inset-left));
+  display: flex;
+}
+
+.body {
+  min-height: 0;
+  flex: 1;
+  overflow: auto;
+  padding: var(--gm-space-6);
+}
+
+@media (max-width: 760px) {
+  .header {
+    padding: var(--gm-space-4);
+  }
+
+  .body {
+    padding: var(--gm-space-4);
+  }
+
+  .actions {
+    justify-content: stretch;
+  }
+}

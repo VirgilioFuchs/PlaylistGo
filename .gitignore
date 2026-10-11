@@ -1,0 +1,43 @@
+# Private local configuration and credentials
+.env
+.env.*
+!.env.example
+**/youtube_token*.json
+**/youtube*.json
+**/client_secret*.json
+**/credentials*.json
+**/*_token.json
+*.pem
+*.key
+
+# Dependencies and generated output
+node_modules/
+bin/
+dist/
+*.tsbuildinfo
+web/vite.config.js
+web/vite.config.d.ts
+/api
+/musicgo-api
+*.log
+tmp-*
+
+# Internal workflow and local tool directories
+.planning/
+.playwright-mcp/
+.idea/
+.vscode/
+.claude/
+.codex/
+.serena/
+.gocache/
+design-references/
+AGENTS.md
+CLAUDE.md
+DESIGN.md
+UIUX_MILESTONE.md
+phase-*.png
+
+# Operating system files
+.DS_Store
+Thumbs.db

@@ -1,0 +1,75 @@
+.root {
+  display: grid;
+  gap: var(--gm-space-1);
+  min-width: 0;
+  color: var(--muted);
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  border: 1px solid var(--gm-surface-2);
+  border-radius: var(--gm-radius-md);
+  background: var(--gm-surface-1);
+  transition:
+    border-color var(--gm-duration-fast) var(--gm-ease-standard),
+    outline-color var(--gm-duration-fast) var(--gm-ease-standard);
+}
+
+.field:focus-within {
+  outline: 2px solid var(--gm-info-500);
+  outline-offset: 2px;
+}
+
+.error {
+  border-color: var(--gm-danger-500);
+}
+
+.leadingIcon {
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  width: 44px;
+  color: var(--muted);
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: var(--gm-space-2) var(--gm-space-4);
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font: inherit;
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.leadingIcon + .input {
+  padding-left: 0;
+}
+
+.input::placeholder {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  opacity: 0.56;
+}
+
+.errorMessage {
+  color: var(--gm-danger-500);
+  font-size: 12px;
+  line-height: 1.4;
+}

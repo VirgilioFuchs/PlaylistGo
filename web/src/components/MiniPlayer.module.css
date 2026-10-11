@@ -1,0 +1,136 @@
+.root {
+  position: fixed;
+  right: 0;
+  bottom: var(--bottom-nav-height);
+  left: 0;
+  z-index: 30;
+  height: var(--player-bar-height);
+  overflow: hidden;
+  border-radius: 0;
+  background: var(--color-bg-elevated);
+  box-shadow: var(--player-bar-elevation);
+}
+
+.exiting {
+  pointer-events: none;
+  animation: exit var(--gm-duration-fast) var(--gm-ease-standard) forwards;
+  will-change: opacity, transform;
+}
+
+.trigger {
+  display: grid;
+  grid-template-columns: var(--player-bar-cover-size) minmax(0, 1fr) max-content;
+  gap: var(--player-bar-gap);
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 var(--player-bar-padding-x);
+  border: 0;
+  color: var(--color-text-primary);
+  text-align: left;
+  background: transparent;
+  touch-action: none;
+}
+
+.trigger:focus-visible {
+  outline: 2px solid var(--gm-info-500);
+  outline-offset: calc(-1 * var(--gm-space-1));
+}
+
+.trigger:disabled {
+  cursor: wait;
+}
+
+.artwork {
+  display: grid;
+  place-items: center;
+  width: var(--player-bar-cover-size);
+  height: var(--player-bar-cover-size);
+  overflow: hidden;
+  border: 0;
+  border-radius: 0;
+  background: var(--color-bg-surface);
+  background-position: center;
+  background-size: cover;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.copy {
+  display: grid;
+  min-width: 0;
+  gap: var(--gm-space-1);
+}
+
+.copy strong,
+.copy span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.copy strong {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.copy span,
+.duration {
+  color: var(--color-text-secondary);
+  font-size: 12px;
+  line-height: 1;
+}
+
+.duration {
+  flex-shrink: 0;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.liveStatus {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@keyframes exit {
+  to {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .exiting {
+    animation: none;
+  }
+}
+
+@media (max-width: 767px) {
+  .root {
+    bottom: var(--bottom-nav-height);
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1086px) {
+  .root {
+    bottom: var(--bottom-nav-height);
+  }
+}
+
+@media (min-width: 1087px) {
+  .root {
+    bottom: 0;
+    left: 106px;
+  }
+
+  :global(.app-shell:has([data-rail-state="expanded"])) .root {
+    left: 245px;
+  }
+}

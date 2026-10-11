@@ -1,0 +1,754 @@
+:global(:root) {
+  --player-expanded-cover-max: 320px;
+  --player-expanded-padding-x: var(--gm-space-6);
+  --player-expanded-header-height: 48px;
+  --player-queue-header-height: 56px;
+  --player-queue-row-height: 48px;
+}
+
+.root {
+  position: fixed;
+  z-index: 40;
+  inset: 0;
+  overflow: hidden;
+  background: var(--gm-bg-0);
+  color: var(--color-text-primary);
+}
+
+.dragSurface {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--gm-surface-1);
+  outline: none;
+}
+
+.summaryPane,
+.queuePane {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  background: var(--gm-surface-1);
+}
+
+.summaryPane {
+  position: relative;
+  overflow: hidden;
+  touch-action: none;
+}
+
+.summaryHeader {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: var(--player-expanded-header-height);
+  flex: 0 0 var(--player-expanded-header-height);
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--gm-space-2);
+}
+
+.iconButton {
+  display: inline-grid;
+  width: 44px;
+  height: 44px;
+  flex: 0 0 44px;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--gm-radius-md);
+  background: transparent;
+  color: var(--color-text-primary);
+  cursor: pointer;
+  transition:
+    background-color var(--gm-duration-fast) var(--gm-ease-standard),
+    color var(--gm-duration-fast) var(--gm-ease-standard);
+}
+
+.iconButton:hover {
+  background: var(--gm-surface-2);
+}
+
+.iconButton:focus-visible,
+.queueHandle:focus-visible {
+  outline: 2px solid var(--gm-info-500);
+  outline-offset: 2px;
+}
+
+.iconButton svg {
+  width: 24px;
+  height: 24px;
+}
+
+.summaryContext {
+  max-width: calc(100% - var(--gm-space-8));
+  margin: 0;
+  overflow: hidden;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.summaryHeader .iconButton {
+  position: absolute;
+  inset-inline-start: var(--gm-space-2);
+}
+
+.summaryBackdrop,
+.summaryScrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.summaryBackdrop {
+  display: grid;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 0;
+  background-position: center;
+  background-size: cover;
+  color: var(--color-text-secondary);
+}
+
+.summaryScrim {
+  z-index: 0;
+  background: var(--color-bg-scrim);
+}
+
+.summaryBody {
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  flex-direction: column;
+  position: relative;
+  z-index: 1;
+  align-items: stretch;
+  justify-content: flex-end;
+  padding-inline: var(--player-expanded-padding-x);
+  padding-bottom: var(--gm-space-8);
+  text-align: start;
+}
+
+.summaryCopy {
+  width: 100%;
+  min-width: 0;
+}
+
+.summaryTitle,
+.summarySubtitle,
+.summaryMeta {
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.summaryTitle {
+  margin-top: var(--gm-space-6);
+  color: var(--color-text-primary);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.summarySubtitle {
+  margin-top: var(--gm-space-1);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.summaryMeta {
+  margin-top: var(--gm-space-2);
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.summaryFooter,
+.queueFooter {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  flex: 0 0 auto;
+  justify-content: center;
+  padding: var(--gm-space-2) var(--gm-space-6);
+}
+
+.queueFooter {
+  touch-action: none;
+}
+
+.queueHandle {
+  display: grid;
+  min-width: 44px;
+  min-height: 44px;
+  justify-items: center;
+  gap: var(--gm-space-1);
+  padding: 0 var(--gm-space-3);
+  border: 0;
+  border-radius: var(--gm-radius-md);
+  background: transparent;
+  color: var(--color-text-secondary);
+  cursor: grab;
+  touch-action: none;
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.queueHandle:active {
+  cursor: grabbing;
+}
+
+.grip {
+  width: 32px;
+  height: 4px;
+  border-radius: var(--gm-radius-sm);
+  background: var(--color-divider);
+}
+
+.queueHeader {
+  display: none;
+}
+
+.queueContext {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  flex: 0 0 44%;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--gm-surface-1);
+}
+
+.queueContextBackdrop,
+.queueContextScrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.queueContextBackdrop {
+  display: grid;
+  z-index: 0;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  background-position: center;
+  background-size: cover;
+}
+
+.queueContextScrim {
+  z-index: 0;
+  background: var(--color-bg-scrim);
+}
+
+.queueContextHeader {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  height: var(--player-expanded-header-height);
+  flex: 0 0 var(--player-expanded-header-height);
+  align-items: center;
+  justify-content: center;
+  padding-inline: var(--gm-space-2);
+}
+
+.queueContextHeader .iconButton {
+  position: absolute;
+  inset-inline-start: var(--gm-space-2);
+}
+
+.queueContextBody {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+  margin-top: auto;
+  padding: 0 var(--player-expanded-padding-x) var(--gm-space-6);
+}
+
+.queueContextTitle,
+.queueContextSubtitle,
+.queueContextMeta {
+  max-width: 100%;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.queueContextTitle {
+  color: var(--color-text-primary);
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.queueContextSubtitle {
+  margin-top: var(--gm-space-1);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.2;
+}
+
+.queueContextMeta {
+  margin-top: var(--gm-space-2);
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.queueHeader {
+  display: none;
+  min-height: var(--player-queue-header-height);
+  grid-template-columns: 44px minmax(0, 1fr);
+  align-items: center;
+  border-bottom: 1px solid var(--color-divider);
+  padding-inline: var(--gm-space-2);
+  touch-action: none;
+}
+
+.queueTitleBlock {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: var(--gm-space-2);
+}
+
+.compactArtwork {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: var(--gm-radius-sm);
+  background: var(--color-bg-elevated);
+  background-position: center;
+  background-size: cover;
+  color: var(--color-text-secondary);
+  font-size: 12px;
+}
+
+.queueTitleBlock h2,
+.trackTitle {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.queueTitleBlock h2 {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.queueViewport {
+  min-height: 0;
+  height: auto;
+  min-height: calc(var(--player-queue-row-height) * 4);
+  flex: 1 1 auto;
+  max-height: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+.trackList {
+  margin: 0;
+  padding: 0 var(--gm-space-3);
+  list-style: none;
+}
+
+.trackRow {
+  display: grid;
+  min-height: var(--player-queue-row-height);
+  grid-template-columns: 32px minmax(0, 1fr) 44px;
+  align-items: center;
+  gap: var(--gm-space-2);
+  border-bottom: 1px solid var(--color-divider);
+  touch-action: pan-y;
+}
+
+.trackPosition,
+.trackDuration {
+  color: var(--color-text-tertiary);
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.2;
+}
+
+.trackPosition {
+  text-align: center;
+}
+
+.queueTrackCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--gm-space-1);
+}
+
+.queueTrackCopy .trackDuration {
+  font-size: 12px;
+}
+
+.trackTitle {
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.trackDuration {
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+.emptyQueue {
+  margin: var(--gm-space-6);
+  color: var(--color-text-secondary);
+  font-size: 14px;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.managementStage {
+  position: relative;
+  display: flex;
+  min-height: 0;
+  flex: 1;
+  overflow: hidden;
+}
+
+.managementDrawer {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  min-height: 0;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--gm-surface-1);
+}
+
+.managementHeader {
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 44px;
+  min-height: 44px;
+  flex: 0 0 44px;
+  align-items: center;
+  padding-inline: var(--gm-space-2);
+  touch-action: none;
+}
+
+.managementHandle {
+  display: grid;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  justify-self: center;
+  place-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: var(--gm-radius-md);
+  background: transparent;
+  cursor: grab;
+}
+
+.managementHandle:active {
+  cursor: grabbing;
+}
+
+.managementHandle:focus-visible,
+.editButton:focus-visible,
+.deleteModeButton:focus-visible,
+.deleteButton:focus-visible,
+.confirmDeleteButton:focus-visible,
+.cancelDeleteButton:focus-visible,
+.reorderHandle:focus-visible {
+  outline: 2px solid var(--gm-info-500);
+  outline-offset: 2px;
+}
+
+.managementToolbar {
+  position: relative;
+  display: flex;
+  min-height: 44px;
+  flex: 0 0 44px;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gm-space-3);
+  padding-inline: var(--gm-space-6);
+  touch-action: none;
+  transform: translateY(calc(var(--gm-space-4) * -1));
+}
+
+.managementToolbar h2 {
+  min-width: 0;
+  margin: 0;
+  overflow: hidden;
+  color: var(--color-text-primary);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.managementToolbar > button {
+  position: absolute;
+  inset-inline-end: var(--gm-space-6);
+}
+
+.editButton,
+.deleteModeButton,
+.deleteButton,
+.confirmDeleteButton,
+.cancelDeleteButton,
+.reorderHandle {
+  min-width: 44px;
+  min-height: 44px;
+  border: 0;
+  border-radius: var(--gm-radius-md);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.editButton {
+  padding-inline: var(--gm-space-3);
+  color: var(--gm-info-500);
+}
+
+.deleteModeButton {
+  padding-inline: var(--gm-space-3);
+  color: var(--gm-danger-500);
+}
+
+.deleteButton,
+.confirmDeleteButton {
+  padding-inline: var(--gm-space-3);
+  color: var(--gm-danger-500);
+}
+
+.cancelDeleteButton {
+  padding-inline: var(--gm-space-3);
+  color: var(--color-text-primary);
+}
+
+.managementStatus {
+  margin: 0;
+  padding: 0 var(--gm-space-6) var(--gm-space-2);
+  color: var(--gm-danger-500);
+  font-size: 13px;
+  line-height: 1.2;
+}
+
+.managementViewport {
+  min-height: 0;
+  flex: 1;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  touch-action: pan-y;
+}
+
+.deleteFooter {
+  display: flex;
+  flex: 0 0 auto;
+  justify-content: flex-end;
+  padding: var(--gm-space-3) var(--gm-space-6) var(--gm-space-4);
+  border-top: 1px solid var(--color-divider);
+}
+
+.continueDeleteButton {
+  min-width: 44px;
+  min-height: 44px;
+  padding-inline: var(--gm-space-6);
+  border: 0;
+  border-radius: var(--gm-radius-md);
+  background: var(--gm-danger-500);
+  color: var(--gm-bg-0);
+  cursor: pointer;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.continueDeleteButton:disabled {
+  cursor: not-allowed;
+  opacity: 0.48;
+}
+
+.continueDeleteButton:focus-visible {
+  outline: 2px solid var(--gm-info-500);
+  outline-offset: 2px;
+}
+
+.managementList {
+  margin: 0;
+  padding: 0 var(--gm-space-3);
+  list-style: none;
+}
+
+.managementRow {
+  display: grid;
+  min-height: var(--player-queue-row-height);
+  grid-template-columns: 44px minmax(0, 1fr) max-content;
+  align-items: center;
+  gap: var(--gm-space-3);
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.managementRowEditing {
+  touch-action: none;
+  cursor: grab;
+}
+
+.managementRowEditing:active {
+  cursor: grabbing;
+}
+
+.dropPlaceholder {
+  min-height: var(--player-queue-row-height);
+  margin-block: var(--gm-space-1);
+  border: 1px dashed var(--gm-info-500);
+  border-radius: var(--gm-radius-sm);
+  background: var(--gm-surface-2);
+}
+
+.managementRowConfirming {
+  grid-template-columns: 44px minmax(0, 1fr);
+  padding-block: var(--gm-space-2);
+}
+
+.trackSelection {
+  position: relative;
+  display: grid;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  place-items: center;
+}
+
+.deleteSelection {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: var(--gm-radius-md);
+  background: var(--gm-surface-1);
+  cursor: pointer;
+}
+
+.deleteSelection input {
+  position: absolute;
+  inset: 0;
+  width: 44px;
+  height: 44px;
+  margin: 0;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.deleteCheckboxIndicator {
+  width: 20px;
+  height: 20px;
+  pointer-events: none;
+  border: 2px solid var(--color-text-secondary);
+  border-radius: var(--gm-radius-sm);
+  background: var(--gm-surface-1);
+}
+
+.deleteSelection input:checked + .deleteCheckboxIndicator {
+  border-color: var(--gm-danger-500);
+  background: var(--gm-danger-500);
+}
+
+.deleteSelection input:checked + .deleteCheckboxIndicator::after {
+  display: block;
+  width: 10px;
+  height: 5px;
+  margin: 4px auto 0;
+  border-bottom: 2px solid var(--gm-bg-0);
+  border-left: 2px solid var(--gm-bg-0);
+  content: "";
+  transform: rotate(-45deg);
+}
+
+.deleteSelection input:focus-visible + .deleteCheckboxIndicator {
+  outline: 2px solid var(--gm-info-500);
+  outline-offset: 2px;
+}
+
+.managementTrackCopy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: var(--gm-space-1);
+}
+
+.managementTrackCopy .trackDuration {
+  font-size: 12px;
+}
+
+.inlineConfirmation {
+  display: flex;
+  grid-column: 2;
+  flex-wrap: wrap;
+  gap: var(--gm-space-2);
+}
+
+.reorderHandle {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  padding: 0;
+  color: var(--color-text-secondary);
+  cursor: grab;
+  touch-action: none;
+}
+
+.reorderHandle:active {
+  cursor: grabbing;
+}
+
+.reorderHandle svg {
+  width: 24px;
+  height: 24px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .iconButton,
+  .queueHandle,
+  .editButton,
+  .deleteModeButton,
+  .deleteButton,
+  .confirmDeleteButton,
+  .cancelDeleteButton,
+  .managementHandle,
+  .reorderHandle {
+    transition: none;
+  }
+}
